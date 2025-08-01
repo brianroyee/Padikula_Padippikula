@@ -5,12 +5,12 @@
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: [SJ]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
+- Team Lead: [Sanjana R Rao] - [ASIET, Kalady]
+- Member 2: [Brian Roy Mathew] - [ASIET, KALADY]
 - Member 3: [Name] - [College]
 
 ### Project Description

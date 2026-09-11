@@ -1,17 +1,17 @@
 <img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
 
 
-# [Project Name] 🎯
+# [To Be Decided] 🎯
 
 
 ## Basic Details
-### Team Name: [Name]
+### Team Name: [Thengakola]
 
 
 ### Team Members
-- Team Lead: [Name] - [College]
-- Member 2: [Name] - [College]
-- Member 3: [Name] - [College]
+- Team Lead: [Brian Roy Mathew] - [ASIET]
+- Member 2: [Ram Madhav R Kammath] - [ASIET]
+
 
 ### Project Description
 [2-3 lines about what your project does]

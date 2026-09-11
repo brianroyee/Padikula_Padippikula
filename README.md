@@ -1,50 +1,67 @@
-<img width="3188" height="1202" alt="frame (3)" src="https://github.com/user-attachments/assets/517ad8e9-ad22-457d-9538-a9e62d137cd7" />
+# Padikula, Padippikula 🎯
 
+## Basic Details
 
-# Padikula, Padippikula
+### Team Name: Thengakola
 
+### Team Members
 
-> A deliberately useless Windows daemon that declares war on studying.
+- Team Lead: Brian Roy Mathew - ASIET
+- Member 2: Ram Madhav R Kammath - ASIET
 
+### Project Description
 
-Padikula, Padippikula monitors the active foreground window on Windows 10/11. When it detects a configured PDF, academic website, or educational YouTube channel, it escalates an absurd intervention: audio, target closure, a Windows Action Center distraction toast, and eventually a timed CAPTCHA.
+Padikula, Padippikula is a deliberately useless Windows daemon that detects configured study material and interferes with it. It monitors the active foreground window, identifies PDFs, academic websites, and educational YouTube channels, then escalates audio, closure actions, distraction notifications, and timed CAPTCHAs.
 
+### The Problem (that doesn't exist)
 
-This is a local, user-space hackathon project. It does not install persistence, drivers, security-policy changes, or kernel-level components.
+People keep opening study material when they could be watching reels, playing games, or doing literally anything less productive. This project solves the imaginary crisis of accidental academic progress.
 
-## Features
+### The Solution (that nobody asked for)
 
-- Foreground-window detection using deterministic configurable rules.
-- PDF, website, and educational YouTube channel matching.
-- Browser-tab closure with window-close fallback.
-- Escalating non-blocking audio with Windows beep fallback.
-- Action Center toast with configurable distraction actions.
-- Rotating image CAPTCHA with short timeout.
-- System-tray menu with statistics, notification test, and exit.
-- Persistent polling loop that continues until stopped from the tray, console, or Task Manager.
-- PyInstaller-compatible asset resolution.
+Padikula, Padippikula declares war on studying. It detects a study attempt, closes the active tab or window, plays an increasingly dramatic audio track, sends a distraction toast with an action button, and eventually traps the user in an absurd image CAPTCHA.
 
-## Project Layout
+## Technical Details
+
+### Technologies/Components Used
+
+For Software:
+
+- Python 3.10+
+- Tkinter
+- `pywin32`
+- `psutil`
+- `pygame`
+- `PyAutoGUI`
+- `winotify`
+- `pystray` and Pillow
+- PyInstaller
+- PowerShell
+
+For Hardware:
+
+- Windows 10/11 x64 computer
+- Keyboard and mouse
+- Audio output device
+
+### Implementation
+
+The project is divided into focused modules:
 
 ```text
-├── main.py                 # daemon loop and offense state
-├── detector.py             # foreground-window detection
-├── actions.py              # close, toast, and distraction actions
-├── audio.py                # audio escalation and fallback
-├── captcha.py              # rotating CAPTCHA UI
-├── tray.py                 # tray icon and statistics screen
-├── utils.py                # resource and JSON helpers
-├── config/                 # editable target and CAPTCHA data
-├── assets/                 # audio and image assets
-├── tests/                  # test workspace
-├── build.ps1               # PyInstaller build command
-├── project_name.spec       # PyInstaller specification
-└── TEST_PLAN.md            # manual verification plan
+Foreground window
+        │
+        ▼
+   detector.py
+        │
+        ▼
+     main.py
+   ┌────┼─────┬──────┐
+   ▼    ▼     ▼      ▼
+ audio actions captcha tray
 ```
 
-## Setup
-
-PowerShell:
+## Installation
 
 ```powershell
 py -3.10 -m venv .venv
@@ -52,17 +69,6 @@ py -3.10 -m venv .venv
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
-
-## Configure
-
-Edit the JSON files in `config/`:
-
-- `websites.json`: study-related domains or title fragments.
-- `youtube_channels.json`: educational channel title fragments.
-- `distractions.json`: toast action labels and URLs.
-- `captcha.json`: image paths, answers, prompts, and time limits.
-
-Add media to `assets/audio/` and `assets/captcha/`.
 
 ## Run
 
@@ -82,14 +88,76 @@ python audio.py --self-test
 python verify_bundle.py
 ```
 
-## Build
+To build the executable:
 
 ```powershell
 .\build.ps1
 .\dist\Padikula_Padippikula.exe --self-test
 ```
 
-Generated `build/`, `dist/`, virtual-environment, and Python-cache files are ignored by Git.
+### Project Documentation
+
+#### Configuration
+
+Edit the JSON files in `config/`:
+
+- `websites.json`: study-related domains or title fragments.
+- `youtube_channels.json`: educational channel title fragments.
+- `distractions.json`: toast action labels and URLs.
+- `captcha.json`: rotating CAPTCHA images, answers, prompts, and time limits.
+
+Add MP3 files to `assets/audio/` and CAPTCHA PNG files to `assets/captcha/`.
+
+#### Screenshots
+
+Screenshots will be added after the final demo capture:
+
+![Screenshot1](docs/screenshots/notification.png)
+*Windows Action Center distraction notification with a configurable action button.*
+
+![Screenshot2](docs/screenshots/captcha.png)
+*Timed image CAPTCHA shown after a repeated study attempt.*
+
+![Screenshot3](docs/screenshots/statistics.png)
+*System-tray statistics screen showing blocked attempts and offense state.*
+
+#### Diagrams
+
+```mermaid
+flowchart TD
+    A[Active foreground window] --> B[detector.py]
+    B -->|Study target| C[main.py offense state]
+    C --> D[Audio escalation]
+    C --> E[Close tab or window]
+    C --> F[Action Center distraction toast]
+    C --> G[Timed CAPTCHA on repeated attempt]
+    G --> H[Tray statistics]
+```
+
+#### Schematic & Circuit
+
+Not applicable. This is a Windows software project with no custom electronic circuit.
+
+#### Build Photos
+
+Not applicable. The project has no hardware build.
+
+### Project Demo
+
+#### Video
+
+Demo video link will be added after recording the final flow.
+
+The demo will show study detection, first-strike audio and notification, repeated-attempt CAPTCHA escalation, and the tray statistics screen.
+
+#### Additional Demos
+
+See [TEST_PLAN.md](TEST_PLAN.md) for the complete manual test procedure and expected output.
+
+## Team Contributions
+
+- Brian Roy Mathew: project architecture, Windows integration, daemon orchestration, packaging, and documentation.
+- Ram Madhav R Kammath: configuration, assets, testing, and demo preparation.
 
 ## Safety and Limitations
 
@@ -97,14 +165,6 @@ Generated `build/`, `dist/`, virtual-environment, and Python-cache files are ign
 - `WM_CLOSE` is a graceful request and may be ignored by an application.
 - Notifications depend on Windows Action Center being available.
 - The project does not disable Task Manager or make itself unkillable.
-- The full manual test procedure is documented in [TEST_PLAN.md](TEST_PLAN.md).
+- Generated `build/`, `dist/`, virtual-environment, and Python-cache files are ignored by Git.
 
-## Team
-
-Built by Team Thengakola for TinkerHub Useless Projects.
-
----
 Built for TinkerHub Useless Projects.
-
-
-

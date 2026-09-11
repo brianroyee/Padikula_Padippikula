@@ -1,5 +1,3 @@
-"""Daemon orchestrator for Padikula, Padippikula."""
-
 from __future__ import annotations
 
 import argparse
@@ -37,8 +35,6 @@ class CaptchaPort(Protocol):
 
 @dataclass(frozen=True)
 class DaemonSettings:
-    """Polling and debounce settings for the background loop."""
-
     poll_interval: float = 1.0
     cooldown_seconds: float = 3.0
     reset_after_seconds: float = 300.0
@@ -49,8 +45,6 @@ class DaemonSettings:
 
 
 class Daemon:
-    """Coordinate detection and interventions while keeping state centralized."""
-
     def __init__(
         self,
         *,
@@ -81,7 +75,6 @@ class Daemon:
         )
 
     def run(self) -> None:
-        """Run until interrupted or ``stop`` is called."""
         self.running = True
         self._stop_event.clear()
         self.tray.start()
@@ -97,7 +90,6 @@ class Daemon:
             self.stop()
 
     def stop(self) -> None:
-        """Request shutdown and release audio resources."""
         self.running = False
         self._stop_event.set()
         self.tray.stop()
@@ -105,7 +97,6 @@ class Daemon:
         LOGGER.info("Daemon stopped")
 
     def poll_once(self, now: float | None = None) -> bool:
-        """Evaluate and handle one foreground-window snapshot."""
         current_time = time.monotonic() if now is None else now
         self._reset_if_idle(current_time)
         window = self.detector.get_active_window()
@@ -171,7 +162,6 @@ def configure_logging(verbose: bool = False) -> None:
 
 
 def run_self_test() -> None:
-    """Exercise first-strike, debounce, and second-strike orchestration safely."""
 
     class FakeDetector:
         def __init__(self) -> None:
@@ -231,7 +221,6 @@ def run_self_test() -> None:
 
 
 def install_signal_handlers(daemon: Daemon) -> None:
-    """Connect console interrupts to graceful daemon shutdown."""
     signal.signal(signal.SIGINT, lambda _signum, _frame: daemon.stop())
     if hasattr(signal, "SIGTERM"):
         signal.signal(signal.SIGTERM, lambda _signum, _frame: daemon.stop())

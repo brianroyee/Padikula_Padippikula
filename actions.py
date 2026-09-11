@@ -1,5 +1,3 @@
-"""Controlled Windows actions for closing targets and launching distractions."""
-
 from __future__ import annotations
 
 import argparse
@@ -17,20 +15,18 @@ try:
     import pyautogui
     import win32gui
     import win32api
-except ImportError:  # pragma: no cover - exercised on non-Windows/dev environments
+except ImportError:
     pyautogui = None
     win32gui = None
     win32api = None
 
 try:
     from winotify import Notification
-except Exception:  # pragma: no cover - unavailable outside Windows
+except Exception:
     Notification = None
 
 
 class ActionController:
-    """Perform immediate actions without tracking offense or application state."""
-
     def __init__(self, distractions_config: str | Path = "config/distractions.json") -> None:
         self.distractions = self._load_distractions(distractions_config)
 
@@ -47,7 +43,6 @@ class ActionController:
         return result
 
     def close_target(self, window: ActiveWindow, *, browser_tab: bool = True) -> bool:
-        """Close a browser tab when possible, otherwise request window closure."""
         process = window.process_name.casefold()
         browsers = {"chrome.exe", "msedge.exe", "firefox.exe", "brave.exe", "opera.exe"}
         try:
@@ -62,7 +57,6 @@ class ActionController:
         return False
 
     def notify(self, message: str, *, distraction_index: int = 0) -> bool:
-        """Show a non-modal Windows Action Center toast with an optional action."""
         if Notification is None:
             LOGGER.warning("Windows toast provider unavailable: %s", message)
             return False
@@ -82,11 +76,9 @@ class ActionController:
             return False
 
     def distraction_count(self) -> int:
-        """Return the number of configured toast actions."""
         return len(self.distractions)
 
     def launch_distraction(self, index: int = 0) -> bool:
-        """Launch one configured distraction URL in the default browser."""
         if not self.distractions:
             LOGGER.warning("No distraction URLs configured")
             return False
@@ -99,7 +91,6 @@ class ActionController:
 
 
 def run_action_test() -> None:
-    """Run a safe action test that only attempts a configured notification."""
     logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
     controller = ActionController()
     result = controller.notify("Action self-test: study detected.")

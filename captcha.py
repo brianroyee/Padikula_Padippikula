@@ -1,5 +1,3 @@
-"""Configurable, topmost image CAPTCHA for the second-strike intervention."""
-
 from __future__ import annotations
 
 import argparse
@@ -19,8 +17,6 @@ _challenge_positions: dict[Path, int] = {}
 
 @dataclass(frozen=True)
 class CaptchaChallenge:
-    """One locally configured CAPTCHA challenge."""
-
     image: Path | None
     answer: str
     time_limit: int
@@ -51,7 +47,6 @@ def load_challenge(
     *,
     index: int | None = None,
 ) -> CaptchaChallenge:
-    """Load a configured challenge, rotating through entries by default."""
     resolved_config = resource_path(config_path)
     with resolved_config.open("r", encoding="utf-8") as config_file:
         payload = json.load(config_file)
@@ -73,8 +68,6 @@ def load_challenge(
 
 
 class ImageCaptcha:
-    """Show a short-lived, frameless CAPTCHA that cannot be normally dismissed."""
-
     def __init__(
         self,
         challenge: CaptchaChallenge,
@@ -94,7 +87,6 @@ class ImageCaptcha:
         self._focus_job: str | None = None
 
     def show(self) -> bool:
-        """Display the CAPTCHA and return whether the answer was correct."""
         if self._root is not None:
             raise RuntimeError("CAPTCHA is already running")
 
@@ -120,7 +112,6 @@ class ImageCaptcha:
         return self.completed
 
     def close(self) -> None:
-        """Close the CAPTCHA from application code without marking it complete."""
         if self._root is not None:
             self._root.destroy()
             self._root = None
@@ -361,7 +352,6 @@ class ImageCaptcha:
 
 
 def run_self_test(config_path: str | Path = DEFAULT_CONFIG_PATH) -> None:
-    """Run the standalone CAPTCHA test with the configured first challenge."""
     logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
     challenge = load_challenge(config_path)
     result = ImageCaptcha(challenge, window_title="Padikula, Padippikula CAPTCHA self-test").show()

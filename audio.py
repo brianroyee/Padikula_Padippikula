@@ -1,5 +1,3 @@
-"""Resilient, non-blocking audio playback with Windows beep fallback."""
-
 from __future__ import annotations
 
 import argparse
@@ -15,18 +13,16 @@ LOGGER = logging.getLogger(__name__)
 
 try:
     import winsound
-except ImportError:  # pragma: no cover - only exercised outside Windows
+except ImportError:
     winsound = None
 
 try:
     import pygame
-except ImportError:  # pragma: no cover - depends on environment
+except ImportError:
     pygame = None
 
 
 class AudioPlayer:
-    """Play escalated tracks without blocking the daemon's polling loop."""
-
     def __init__(
         self,
         tracks: Iterable[str | Path] | None = None,
@@ -63,11 +59,9 @@ class AudioPlayer:
 
     @property
     def tracks(self) -> tuple[Path, ...]:
-        """Return the configured tracks in escalation order."""
         return tuple(self._tracks)
 
     def initialize(self) -> bool:
-        """Initialize pygame audio, returning whether the mixer is usable."""
         with self._lock:
             if self._mixer_ready:
                 return True
@@ -84,7 +78,6 @@ class AudioPlayer:
                 return False
 
     def play(self, offense_level: int) -> bool:
-        """Play the track for a one-based offense level, or fall back to a beep."""
         if offense_level < 1:
             raise ValueError("offense_level must be at least 1")
 
@@ -94,7 +87,6 @@ class AudioPlayer:
         return self._play_beep()
 
     def cleanup(self) -> None:
-        """Stop playback and release pygame audio resources."""
         if pygame is None:
             return
         with self._lock:
@@ -144,7 +136,6 @@ class AudioPlayer:
 
 
 def run_self_test() -> None:
-    """Exercise track discovery and fallback playback independently."""
     logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
     player = AudioPlayer()
     print(f"Discovered MP3 tracks: {len(player.tracks)}")

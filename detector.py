@@ -1,5 +1,3 @@
-"""Foreground-window study detection using configurable deterministic rules."""
-
 from __future__ import annotations
 
 import argparse
@@ -34,7 +32,7 @@ try:
     import psutil
     import win32gui
     import win32process
-except ImportError:  # pragma: no cover - exercised on non-Windows/dev environments
+except ImportError:
     psutil = None
     win32gui = None
     win32process = None
@@ -50,8 +48,6 @@ class TargetType(str, Enum):
 
 @dataclass(frozen=True)
 class ActiveWindow:
-    """Snapshot of the current foreground window."""
-
     handle: int
     title: str
     process_name: str
@@ -60,8 +56,6 @@ class ActiveWindow:
 
 @dataclass(frozen=True)
 class DetectionResult:
-    """Structured result returned by the deterministic study evaluator."""
-
     detected: bool
     target_type: TargetType = TargetType.UNKNOWN
     title: str = ""
@@ -71,8 +65,6 @@ class DetectionResult:
 
 
 class StudyDetector:
-    """Inspect only the foreground window and evaluate configured study rules."""
-
     def __init__(
         self,
         *,
@@ -107,7 +99,6 @@ class StudyDetector:
         return tuple(value for value in normalized if value)
 
     def get_active_window(self) -> ActiveWindow | None:
-        """Return the foreground window snapshot, or ``None`` if unavailable."""
         if win32gui is None or win32process is None or psutil is None:
             LOGGER.warning("Windows detection dependencies are unavailable")
             return None
@@ -124,7 +115,6 @@ class StudyDetector:
             return None
 
     def evaluate(self, window: ActiveWindow | None) -> DetectionResult:
-        """Evaluate one window snapshot without inspecting background processes."""
         if window is None:
             return DetectionResult(False, reason="foreground_window_unavailable")
 
@@ -165,7 +155,6 @@ class StudyDetector:
 
 
 def run_detector_test(interval: float = 1.0) -> None:
-    """Continuously print foreground-window and detection information."""
     detector = StudyDetector()
     print("Press Ctrl+C to stop the detector test.")
     try:

@@ -1,5 +1,3 @@
-"""System-tray controls and a small statistics window for Padikula, Padippikula."""
-
 from __future__ import annotations
 
 import logging
@@ -13,7 +11,7 @@ LOGGER = logging.getLogger(__name__)
 try:
     import pystray
     from PIL import Image, ImageDraw
-except ImportError:  # pragma: no cover - optional UI on unsupported environments
+except ImportError:
     pystray = None
     Image = None
     ImageDraw = None
@@ -21,8 +19,6 @@ except ImportError:  # pragma: no cover - optional UI on unsupported environment
 
 @dataclass
 class RuntimeStats:
-    """Counters shown in the tray statistics screen."""
-
     attempts_blocked: int = 0
     pdf_attempts: int = 0
     website_attempts: int = 0
@@ -34,8 +30,6 @@ class RuntimeStats:
 
 
 class TrayController:
-    """Own the optional tray icon without owning daemon state."""
-
     def __init__(
         self,
         stats: RuntimeStats,
@@ -50,7 +44,6 @@ class TrayController:
         self._thread: threading.Thread | None = None
 
     def start(self) -> None:
-        """Start the tray icon in a daemon thread when pystray is available."""
         if pystray is None or Image is None or ImageDraw is None:
             LOGGER.warning("System tray unavailable; install pystray and Pillow")
             return
@@ -58,7 +51,6 @@ class TrayController:
         self._thread.start()
 
     def stop(self) -> None:
-        """Remove the tray icon."""
         if self._icon is not None:
             self._icon.stop()
 

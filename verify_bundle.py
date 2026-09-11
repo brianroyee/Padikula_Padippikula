@@ -1,5 +1,3 @@
-"""Verify that a packaged or development resource tree is usable."""
-
 from __future__ import annotations
 
 import argparse
@@ -19,7 +17,6 @@ REQUIRED_PATHS = (
 
 
 def verify_bundle(root: Path | None = None) -> None:
-    """Check that required bundled configuration and asset directories exist."""
     missing = []
     for relative_path in REQUIRED_PATHS:
         path = (root / relative_path) if root else resource_path(relative_path)

@@ -1,0 +1,34 @@
+# Python cache and test artifacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Packaging output
+build/
+dist/
+*.spec
+!project_name.spec
+
+# Local configuration and IDE files
+.env
+.env.*
+.vscode/
+.idea/
+
+# Runtime output
+*.log
+*.state
+
+# Windows and editor noise
+Thumbs.db
+Desktop.ini
+*.tmp
+*.bak
+*.swp

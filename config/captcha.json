@@ -1,0 +1,16 @@
+{
+  "challenges": [
+    {
+      "image": "../assets/captcha/integration_01.png",
+      "answer": "42",
+      "time_limit": 9,
+      "prompt": "What is the answer to this unnecessarily urgent question?"
+    },
+    {
+      "image": "../assets/captcha/circuit_02.png",
+      "answer": "YOUR_CORRECT_ANSWER",
+      "time_limit": 9,
+      "prompt": "Simplify this before your academic privileges are revoked."
+    }
+  ]
+}

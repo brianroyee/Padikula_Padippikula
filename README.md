@@ -118,9 +118,6 @@ Screenshots will be added after the final demo capture:
 ![Screenshot2](docs/screenshots/captcha.png)
 *Timed image CAPTCHA shown after a repeated study attempt.*
 
-![Screenshot3](docs/screenshots/statistics.png)
-*System-tray statistics screen showing blocked attempts and offense state.*
-
 #### Diagrams
 
 ```mermaid
@@ -146,9 +143,7 @@ Not applicable. The project has no hardware build.
 
 #### Video
 
-Demo video link will be added after recording the final flow.
-
-The demo will show study detection, first-strike audio and notification, repeated-attempt CAPTCHA escalation, and the tray statistics screen.
+Demo video link: 
 
 #### Additional Demos
 
@@ -156,8 +151,8 @@ See [TEST_PLAN.md](TEST_PLAN.md) for the complete manual test procedure and expe
 
 ## Team Contributions
 
-- Brian Roy Mathew: project architecture, Windows integration, daemon orchestration, packaging, and documentation.
-- Ram Madhav R Kammath: configuration, assets, testing, and demo preparation.
+- Brian Roy Mathew: project architecture, Windows integration, daemon orchestration, packaging.
+- Ram Madhav R Kammath: configuration, assets, audio modules, and demo preparation.
 
 ## Safety and Limitations
 
